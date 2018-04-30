@@ -1,0 +1,32 @@
+.menu-close{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 130;
+  cursor: pointer;
+
+  span{
+    width: 20px;
+    height: 3px;
+    background-color: #fff;
+    display: block;
+    border-radius: 30px;
+  }
+
+  span:first-child {
+    position: absolute;
+    top: 9px;
+    left: 0;
+    @include rotate(45deg);
+
+  }
+  span:last-child {
+    position: absolute;
+    top: 9px;
+    right: 0;
+    @include rotate(-45deg);
+
+  }
+}

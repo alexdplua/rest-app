@@ -1,0 +1,43 @@
+.menu-wrap{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: -100%;
+  bottom: 0;
+  //height: 100vh;
+  width: 100%;
+  @include transitions(0.3s);
+
+  z-index: 1000;
+  &__mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: #000000;
+    opacity: 0.7;
+    display: none;
+
+    &-show {
+      display: block;
+    }
+  }
+
+  &__scroll{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    &::-webkit-scrollbar { width: 0; }
+  }
+
+  &__show{
+    left: 0;
+  }
+}

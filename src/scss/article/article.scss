@@ -1,0 +1,29 @@
+.article{
+  width: 100%;
+
+  &__item{
+    display: block;
+    position: relative;
+    height: 192px;
+    @include backgr(cover, center);
+    background-image: url('../img/tavuklu-sultan-kebab-.jpg');
+
+    &-2{
+      background-image: url('../img/havu-lu-soslu-k-fte.jpg');
+    }
+
+    &-3{
+      background-image: url('../img/sebzeli-noodle.jpg');
+    }
+  }
+
+  &__mask{
+    background-image: linear-gradient(to top, #000000 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0.75;
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+}

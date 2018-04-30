@@ -1,0 +1,21 @@
+.article-view{
+  background-color: $orange;
+  border-radius: 20px;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  font-size: 11px;
+  padding: 3px 12px;
+  margin-top: 5px;
+  cursor: pointer;
+
+  span{
+    @include backgr(cover, center);
+    background-image: url('../img/goz.svg');
+    display: block;
+    width: 13px;
+    height: 10px;
+    margin-right: 4px;
+    margin-top: 1px;
+  }
+}

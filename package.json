@@ -1,0 +1,45 @@
+{
+  "name": "rest-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --inline --hot --mode development",
+    "lint": "eslint ./src",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexdplua/rest-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexdplua/rest-app/issues"
+  },
+  "homepage": "https://github.com/alexdplua/rest-app#readme",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15",
+    "autoprefixer": "^8.1.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "css-loader": "^0.28.10",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.1",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.2",
+    "url-loader": "^1.0.1",
+    "webpack-dev-server": "^3.1.0"
+  }
+}

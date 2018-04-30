@@ -1,0 +1,15 @@
+.menu-button{
+  width: 22px;
+  cursor: pointer;
+
+  span{
+    display: block;
+    height: 3px;
+    border-radius: 20%;
+    background-color: #fff;
+    margin-bottom: 6px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}

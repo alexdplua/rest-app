@@ -1,0 +1,21 @@
+.article-stars{
+  background-color:  $article-stars;
+  border-radius: 20px;
+  display: flex;
+  cursor: pointer;
+  padding: 4px 8px;
+
+  .star{
+    display: block;
+    width: 10px;
+    height: 10px;
+    @include backgr(cover, center);
+    background-image: url('../img/star-n.svg');
+    margin-right: 2px;
+    margin-left: 2px;
+
+    &.active{
+      background-image: url('../img/star.svg');
+    }
+  }
+}
