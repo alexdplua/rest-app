@@ -12,6 +12,9 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: 'public/'
     },
+    performance: {
+        hints: process.env.NODE_ENV === 'production' ? "warning" : false
+    },
     devServer: {
         contentBase: [path.join(__dirname, 'src'), path.join(__dirname, 'public')],
         watchContentBase: true,
@@ -60,24 +63,18 @@ module.exports = {
                 loaders: ["style-loader","css-loader"]
             },
             {
-                test: /\.(jpe?g|png|gif|mp3|html)$/i,
+                test: /\.(svg|jpg|png)$/i,
                 // include: path.resolve(__dirname, 'src'),
-                loaders: ['file-loader']
-            },
-
-
-            {
-                test: /\.ico$/,
-                include: path.resolve(__dirname, 'src'),
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[name].[ext]'
+                            name: '[path][name].[ext]',
                         }
                     }
                 ]
-            }, {
+            },
+            {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 include: path.resolve(__dirname, 'src'),
                 use: [
@@ -90,11 +87,7 @@ module.exports = {
                     }
 
                 ]
-            }, {
-                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-                include: path.resolve(__dirname, 'src'),
-                loader: 'file-loader'
-            },
+            }
             ]
     },
     plugins: [
