@@ -1,5 +1,7 @@
 .navig{
   background-color: $orange;
+  position: relative;
+  z-index: 20;
 
   &__container{
     width:auto;
