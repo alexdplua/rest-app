@@ -1,29 +1,40 @@
 import './scss/main.scss';
-
-jQuery(document).ready(function () {
-      $('.menu-button').click(function () {
-          $('.menu-wrap').addClass('menu-wrap__show');
-          $('.menu-wrap__mask').addClass('menu-wrap__mask-show');
-          $('body').addClass('body-fix');
-      });
-
-    $('.menu-close').click(function () {
-        $('.menu-wrap').removeClass('menu-wrap__show');
-        $('.menu-wrap__mask').removeClass('menu-wrap__mask-show');
-        $('body').removeClass('body-fix')
-    });
-
-    $('ul.navig__list').on('click', 'li:not(.active)', function() {
-        $(this)
-            .addClass('active')
-            .siblings()
-            .removeClass('active');
-            $('div.tabs')
-            .find('div.tab')
-            .removeClass('active')
-            .eq($(this).index())
-            .addClass('active');
-    });
+import './components/old';
 
 
-});
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {createStore, applyMiddleware} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
+import {syncHistoryWithStore} from 'react-router-redux'
+import {Router, Route, browserHistory} from 'react-router'
+import {Provider} from 'react-redux'
+
+import reducers from './components/reducers'
+
+
+import Layout from './components/layout';
+import Articles from './components/articles';
+import Article from './components/article';
+
+const store = createStore(reducers, composeWithDevTools(
+    applyMiddleware(thunk)
+))
+
+const history = syncHistoryWithStore(browserHistory, store)
+
+
+ReactDOM.render(
+    <Provider store={store}>
+        <Router history={history}>
+            <Route component={Layout}>
+                <Route path={'/'} component={Articles}/>
+                <Route path={'article/:id'} component={Article}/>
+            </Route>
+        </Router>
+    </Provider>,
+    document.getElementById('root')
+);
+
+

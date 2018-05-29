@@ -6,7 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
     devtool: 'source-map',
-    entry: './src/index.js',
+    entry: ['babel-regenerator-runtime','./src/index.js'],
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js',
@@ -29,7 +29,7 @@ module.exports = {
                     {
                         loader: 'babel-loader',
                         options: {
-                            presets: ['env', 'react']
+                            presets: ['env', 'react', 'stage-0']
                         }
                     }
                 ]
