@@ -1,7 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import PropTypes from 'prop-types';
 
+import {
+    getDishes
+} from '../../selectors';
 import {
     fetchDishes
 } from '../../actions';
@@ -14,11 +18,15 @@ class Articles extends React.Component {
         this.props.fetchDishes()
     }
 
+    static propTypes = {
+        fetchDishes: PropTypes.func.isRequired
+    }
+
 
     renderArticle(dish, index) {
         console.log('dish', dish);
         return (
-            <Link key={index} to={`article/${dish.id}`}>
+            <Link key={index} to={`/article/${dish.id}`}>
                 <ArticleItem  dish={dish}/>
             </Link>
         )
@@ -36,7 +44,7 @@ class Articles extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    dishes: state.dishes
+    dishes: getDishes(state, ownProps)
 })
 
 const mapDispatchToProps = {

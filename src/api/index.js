@@ -1,4 +1,5 @@
 import dishes from './mockDishes';
+import categories from './mockCategories';
 
 export const fetchDishes = async () => {
     return new Promise(resolve => {
@@ -12,5 +13,12 @@ export const fetchDishById = async id => {
         let dish = {}
         dishes.map((item) => item.id===id ? dish = item : null)
         resolve(dish)
+    })
+}
+
+
+export const fetchCategories = async () => {
+    return new Promise(resolve => {
+        resolve(categories)
     })
 }

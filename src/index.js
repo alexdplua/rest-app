@@ -30,7 +30,8 @@ ReactDOM.render(
         <Router history={history}>
             <Route component={Layout}>
                 <Route path={'/'} component={Articles}/>
-                <Route path={'article/:id'} component={Article}/>
+                <Route path={'/categories/:id'} component={Articles}/>
+                <Route path={'/article/:id'} component={Article}/>
             </Route>
         </Router>
     </Provider>,

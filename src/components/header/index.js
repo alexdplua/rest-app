@@ -2,9 +2,16 @@ import React from 'react';
 import {Link} from 'react-router';
 
 const Header = () => {
+
+    const openMenu = () =>{
+        document.querySelector('.menu-wrap').classList.add('menu-wrap__show')
+        document.querySelector('.menu-wrap__mask').classList.add('menu-wrap__mask-show')
+        document.querySelector('body').classList.add('body-fix')
+    }
+
     return (
         <header className="header">
-            <div href="" className="menu-button">
+            <div onClick={openMenu} className="menu-button">
                 <span/>
                 <span/>
                 <span/>

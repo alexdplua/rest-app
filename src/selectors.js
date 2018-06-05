@@ -15,3 +15,20 @@ export const getSimilarDishes = state => {
 
     return result
 }
+
+export const getDishes = (state, ownProps) => {
+    const activeCategoryId = getActiveCategoryId(ownProps)
+    console.log('activeCategoryId', activeCategoryId);
+    const {dishes} = state
+    if(activeCategoryId) {
+        let result = dishes.filter((dish) => dish.categoryId === activeCategoryId)
+        console.log('getDishes', result);
+        return result
+    }
+
+    return dishes
+}
+
+export const getActiveCategoryId = ownProps => {
+    return ownProps.params.id
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+
+import PropTypes from 'prop-types';
 import YouTube from 'react-youtube';
 import {
     fetchDishById
@@ -12,43 +13,42 @@ import {
 
 import ArticleItem from './article-item';
 import Content from '../content';
+import TabNav from '../tab';
+
+import Description from './description';
+import SimilarItems from '../similarItems';
+import Ingredients from './ingredients';
 
 class Article extends React.Component {
 
     constructor(props) {
         super(props)
 
-        this.renderDescription = this.renderDescription.bind(this)
-        this.renderVideo = this.renderVideo.bind(this)
-        this.renderSimilar = this.renderSimilar.bind(this)
+        this.changeActive = this.changeActive.bind(this)
+
+        this.state = {
+            active: 0
+        }
+    }
+
+    static propTypes = {
+        fetchDishById: PropTypes.func.isRequired,
+        dish: PropTypes.object.isRequired,
+        similarDishes: PropTypes.array
     }
 
     componentDidMount() {
         this.props.fetchDishById(this.props.params.id)
+        console.log('componentDidMount');
     }
 
-    renderDescription() {
-        const description = this.props.dish.description || []
-        return (
-            <div>
-                {description.map((desc, index) => <p key={index} className="content__text">{desc}</p>)}
-            </div>
-        )
-    }
 
-    renderVideo() {
-        const {videoLink} = this.props.dish
-        return (
-            <YouTube
-                videoId={videoLink}
-                onReady={this._onReady}
-                opts={{
-                    width:'100%',
-                    height: 'auto'
-
-                }}
-            />
-        )
+    componentDidUpdate(prevProps, prevState, prevContext) {
+        if (prevProps.params.id !== this.props.params.id) {
+            console.log('componentDidUpdate', this.props.params.id);
+            prevProps.fetchDishById(this.props.params.id)
+            window.scrollTo(0, 0)
+        }
     }
 
     _onReady(event) {
@@ -56,41 +56,71 @@ class Article extends React.Component {
         event.target.pauseVideo();
     }
 
-    renderSimilar(){
-        const {similarDishes} = this.props
-        return(
-            <div className="list">
-                {similarDishes.map((dish, index) => {
-                    return(
-                        <div key={index} className="list__wrap">
-                            <Link to={`article/${dish.id}`} className="list__block">
-                                <div className="list__img" style={{backgroundImage: `url('${dish.image}')`}}>
-                                </div>
-                            </Link>
+
+    changeActive(active){
+        this.setState({
+            active
+        })
+        console.log('active', active);
+    }
+
+    renderElements(){
+
+        const description = this.props.dish.description || []
+        const similarDishes = this.props.similarDishes || []
+        const {videoLink} = this.props.dish
+        const ingredients = this.props.dish.ingredients || []
+
+        switch (this.state.active){
+            case 0:
+                return(
+                    <div className="content tabs">
+                        <div className="content__container">
+                            <Content title={'Method:'}>
+                                <Description description={description}/>
+                            </Content>
+                            <Content title={'Video:'}>
+                                <YouTube
+                                    videoId={videoLink}
+                                    onReady={this._onReady}
+                                    opts={{
+                                        width: '100%',
+                                        height: 'auto'
+
+                                    }}
+                                />
+                            </Content>
+                            <Content title={'You may also like:'}>
+                                <SimilarItems similarDishes={similarDishes} />
+                            </Content>
                         </div>
-                    )
-                })}
-            </div>
-        )
+                    </div>
+                )
+            case 1:
+                return (
+                    <div className="content__container">
+                        <Content title={'Ingredients'} renderContent={this.renderIngredients}>
+                            <Ingredients ingredients={ingredients} />
+                        </Content>
+                    </div>
+                )
+            default:
+                return null
+        }
     }
 
     render() {
         console.log('this.props.dish', this.props.dish)
         const {dish} = this.props
-        //
-        return (
-            <div className="article">
-                <ArticleItem dish={dish}/>
-                <div className="content tabs">
-                    <div className="content__container tab active">
-                        <Content title={'Hazırlanış:'} renderContent={this.renderDescription}/>
-                        <Content title={'Tarifin Videosu:'} renderContent={this.renderVideo}/>
-                        <Content title={'Tarif Resimleri:'} renderContent={this.renderSimilar}/>
 
-                    </div>
+        return (
+            <div>
+                <TabNav changeActive={this.changeActive} active = {this.state.active} items = {['Method', 'Ingredients']} />
+                <div className="article">
+                    <ArticleItem dish={dish}/>
+                    {this.renderElements()}
                 </div>
             </div>
-
         );
     }
 }
