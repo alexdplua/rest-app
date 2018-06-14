@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --inline --hot --mode development --host 192.168.31.202",
+    "start": "webpack-dev-server --inline --hot --mode development",
     "lint": "eslint ./src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fix": "webpack --progress --profile --colors --display-error-details --display-cached",

@@ -14,8 +14,18 @@ import ArticleItem from '../article/article-item';
 
 class Articles extends React.Component {
 
+    constructor(props){
+        super(props)
+        this.state = {
+            loading: true
+        }
+    }
+
     componentDidMount() {
         this.props.fetchDishes()
+        this.setState({
+            loading: false
+        })
     }
 
     static propTypes = {
@@ -33,6 +43,7 @@ class Articles extends React.Component {
     }
 
     render() {
+        if (this.state.loading) return null
         const {dishes} = this.props
         return (
             <div className="article">

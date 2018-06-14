@@ -27,7 +27,8 @@ class Article extends React.Component {
         this.changeActive = this.changeActive.bind(this)
 
         this.state = {
-            active: 0
+            active: 0,
+            loading: true
         }
     }
 
@@ -40,6 +41,9 @@ class Article extends React.Component {
     componentDidMount() {
         this.props.fetchDishById(this.props.params.id)
         console.log('componentDidMount');
+        this.setState({
+            loading: false
+        })
     }
 
 
@@ -57,23 +61,27 @@ class Article extends React.Component {
     }
 
 
-    changeActive(active){
+    changeActive(active) {
         this.setState({
             active
         })
         console.log('active', active);
     }
 
-    renderElements(){
+    renderElements() {
 
-        const description = this.props.dish.description || []
-        const similarDishes = this.props.similarDishes || []
-        const {videoLink} = this.props.dish
-        const ingredients = this.props.dish.ingredients || []
+        const {
+            description,
+            ingredients,
+            videoLink
+        } = this.props.dish
 
-        switch (this.state.active){
+        const {similarDishes} = this.props
+
+
+        switch (this.state.active) {
             case 0:
-                return(
+                return (
                     <div className="content tabs">
                         <div className="content__container">
                             <Content title={'Method:'}>
@@ -91,7 +99,7 @@ class Article extends React.Component {
                                 />
                             </Content>
                             <Content title={'You may also like:'}>
-                                <SimilarItems similarDishes={similarDishes} />
+                                <SimilarItems similarDishes={similarDishes}/>
                             </Content>
                         </div>
                     </div>
@@ -100,7 +108,7 @@ class Article extends React.Component {
                 return (
                     <div className="content__container">
                         <Content title={'Ingredients'} renderContent={this.renderIngredients}>
-                            <Ingredients ingredients={ingredients} />
+                            <Ingredients ingredients={ingredients}/>
                         </Content>
                     </div>
                 )
@@ -110,12 +118,12 @@ class Article extends React.Component {
     }
 
     render() {
-        console.log('this.props.dish', this.props.dish)
+        if (this.state.loading) return null
         const {dish} = this.props
 
         return (
             <div>
-                <TabNav changeActive={this.changeActive} active = {this.state.active} items = {['Method', 'Ingredients']} />
+                <TabNav changeActive={this.changeActive} active={this.state.active} items={['Method', 'Ingredients']}/>
                 <div className="article">
                     <ArticleItem dish={dish}/>
                     {this.renderElements()}

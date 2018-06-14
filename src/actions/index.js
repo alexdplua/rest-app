@@ -20,10 +20,10 @@ import {
 } from '../api'
 
 
-export const fetchDishes = () => async dispatch => {
+export const fetchDishes = () => dispatch => {
     dispatch({type: FETCH_DISHES_START})
     try {
-        const dishes = await fetchDishesApi()
+        const dishes = fetchDishesApi()
         console.log('dishes', dishes);
         dispatch({
             type: FETCH_DISHES_SUCCESS,
@@ -39,10 +39,10 @@ export const fetchDishes = () => async dispatch => {
 }
 
 
-export const fetchDishById = id => async dispatch => {
+export const fetchDishById = id => dispatch => {
     dispatch({type: FETCH_DISHBYID_START})
     try {
-        const dish = await fetchDishByIdApi(id)
+        const dish = fetchDishByIdApi(id)
 
         dispatch({
             type: FETCH_DISHBYID_SUCCESS,
@@ -57,10 +57,10 @@ export const fetchDishById = id => async dispatch => {
     }
 }
 
-export const fetchCategories = () => async dispatch => {
+export const fetchCategories = () => dispatch => {
     dispatch({type: FETCH_CATEGORIES_START})
     try {
-        const categories = await fetchCategoriesApi()
+        const categories = fetchCategoriesApi()
         dispatch({
             type: FETCH_CATEGORIES_SUCCESS,
             payload: categories
