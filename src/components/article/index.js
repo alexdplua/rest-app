@@ -8,7 +8,8 @@ import {
 } from '../../actions';
 
 import {
-    getSimilarDishes
+    getSimilarDishes,
+    getDishById
 } from '../../selectors';
 
 import ArticleItem from './article-item';
@@ -28,23 +29,14 @@ class Article extends React.Component {
 
         this.state = {
             active: 0,
-            loading: true
         }
     }
 
     static propTypes = {
-        fetchDishById: PropTypes.func.isRequired,
         dish: PropTypes.object.isRequired,
         similarDishes: PropTypes.array
     }
 
-    componentDidMount() {
-        this.props.fetchDishById(this.props.params.id)
-        console.log('componentDidMount');
-        this.setState({
-            loading: false
-        })
-    }
 
 
     componentDidUpdate(prevProps, prevState, prevContext) {
@@ -118,7 +110,7 @@ class Article extends React.Component {
     }
 
     render() {
-        if (this.state.loading) return null
+        if (!this.props.dish) return null
         const {dish} = this.props
 
         return (
@@ -134,8 +126,8 @@ class Article extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    dish: state.dishById,
-    similarDishes: getSimilarDishes(state)
+    dish: getDishById(state, ownProps),
+    similarDishes: getSimilarDishes(state, ownProps)
 })
 
 const mapDispatchToProps = {

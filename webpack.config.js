@@ -3,17 +3,16 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 
 
-
 module.exports = {
     devtool: 'source-map',
-    entry: ['babel-regenerator-runtime','./src/index.js'],
+    entry: ['babel-regenerator-runtime', './src/index.js'],
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js',
         publicPath: 'public/'
     },
     performance: {
-        hints: process.env.NODE_ENV === 'production' ? "warning" : false
+        hints: process.env.NODE_ENV === 'production' ? 'warning' : false
     },
     devServer: {
         contentBase: [path.join(__dirname, 'src'), path.join(__dirname, 'public')],
@@ -60,20 +59,34 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loaders: ["style-loader","css-loader"]
+                loaders: ['style-loader', 'css-loader']
             },
             {
-                test: /\.(svg|jpg|png)$/i,
-                // include: path.resolve(__dirname, 'src'),
+                test: /\.(png|jpg|gif|svg)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[path][name].[ext]',
+                            name: '[name].[ext]',
                         }
                     }
                 ]
             },
+            {
+                test: /\.html$/,
+                loaders: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'img/[name].[ext]',
+                            publicPath: function (url) {
+                                return url.replace('/', './../');
+                            }
+                        }
+                    }
+                ]
+            }
+            ,
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 include: path.resolve(__dirname, 'src'),
@@ -88,7 +101,7 @@ module.exports = {
 
                 ]
             }
-            ]
+        ]
     },
     plugins: [
         new webpack.ProvidePlugin({

@@ -1,4 +1,4 @@
-
+//deprecated
 import {
     FETCH_DISHBYID_SUCCESS
 } from '../../actionTypes'

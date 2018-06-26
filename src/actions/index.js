@@ -20,7 +20,7 @@ import {
 } from '../api'
 
 
-export const fetchDishes = () => dispatch => {
+/*export const fetchDishes = () => dispatch => {
     dispatch({type: FETCH_DISHES_START})
     try {
         const dishes = fetchDishesApi()
@@ -36,26 +36,34 @@ export const fetchDishes = () => dispatch => {
             error: true
         })
     }
-}
+}*/
 
-
-export const fetchDishById = id => dispatch => {
-    dispatch({type: FETCH_DISHBYID_START})
-    try {
-        const dish = fetchDishByIdApi(id)
-
-        dispatch({
-            type: FETCH_DISHBYID_SUCCESS,
-            payload: dish,
-        })
-    } catch (err) {
-        dispatch({
-            type: FETCH_DISHBYID_FAILURE,
-            payload: err,
-            error: true
-        })
+const handleErrors=(response)=> {
+    if (!response.ok) {
+        throw Error(response.statusText);
     }
+    return response;
 }
+
+export const fetchDishes = () => dispatch => {
+    dispatch({type: FETCH_DISHES_START})
+    return fetch("https://api.myjson.com/bins/vdsly")
+        .then(handleErrors)
+        .then(res => res.json())
+        .then(json => {
+            console.log('json', json);
+            dispatch({
+                type: FETCH_DISHES_SUCCESS,
+                payload: json,
+            })
+            return json;
+        })
+        .catch(error => dispatch({
+            type: FETCH_DISHES_FAILURE,
+            payload: error,
+        }));
+}
+
 
 export const fetchCategories = () => dispatch => {
     dispatch({type: FETCH_CATEGORIES_START})

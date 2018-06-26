@@ -16,16 +16,12 @@ class Articles extends React.Component {
 
     constructor(props){
         super(props)
-        this.state = {
-            loading: true
-        }
+
     }
 
     componentDidMount() {
+        console.log('componentDidMount');
         this.props.fetchDishes()
-        this.setState({
-            loading: false
-        })
     }
 
     static propTypes = {
@@ -43,8 +39,9 @@ class Articles extends React.Component {
     }
 
     render() {
-        if (this.state.loading) return null
-        const {dishes} = this.props
+        if(!this.props.dishes) return null
+        if (this.props.fetch) return null
+        const dishes = this.props.dishes
         return (
             <div className="article">
                 {dishes.map((dish, index) => this.renderArticle(dish, index))}
@@ -55,7 +52,9 @@ class Articles extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    dishes: getDishes(state, ownProps)
+    dishes: getDishes(state, ownProps),
+    fetch: state.dishes.fetch,
+    // dishes: state.dishes
 })
 
 const mapDispatchToProps = {
